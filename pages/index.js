@@ -1,61 +1,58 @@
 import Layout from '../components/Layout';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Pokemon from '../components/Pokemon';
-import { proxy, useSnapshot } from 'valtio';
-const state = proxy({
-  offset: 0,
-  page: 1,
-});
-const nextPage = () => {
-  state.offset += 20;
-  state.page += 1;
-};
-const prevPage = () => {
-  state.offset -= 20;
-  state.page -= 1;
-};
+import { useSessionStorage, useEventListener } from 'usehooks-ts';
+
 export default function Home({ initialPokemon }) {
   const [pokemon, setPokemon] = useState(initialPokemon);
-  const snap = useSnapshot(state);
-  //   const currentPage =
-  //     snap.offset == 0
-  //       ? initialPokemon.results
-  //       : pokemon.results.slice(snap.offset, snap.offset + 20);
+  const [page, setPage] = useSessionStorage('page', 1);
+  const [offset, setOffet] = useSessionStorage('offset', 0);
 
-  //   const [offset, setOffet] = useState(0);
-
-  const fetchPokemon = async (url, next) => {
-    const response = await fetch(url);
+  const nextPokemon = async (url) => {
+    setPage((x) => x + 1);
+    setOffet((x) => x + 20);
+    const response = await fetch(
+      `https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset + 20}`
+    );
     const nextPokemon = await response.json();
-    if (next) {
-      nextPage();
-      setPokemon(nextPokemon);
-    } else {
-      prevPage();
-      setPokemon(nextPokemon);
-    }
-  };
 
+    setPokemon(nextPokemon);
+  };
+  const prevPokemon = async (url) => {
+    setPage((x) => x - 1);
+    setOffet((x) => x - 20);
+    const response = await fetch(
+      `https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset + 20}`
+    );
+    const nextPokemon = await response.json();
+
+    setPokemon(nextPokemon);
+  };
+  const refresh = (e) => {
+    setPage(1);
+    setOffet(0);
+  };
+  useEventListener('beforeunload', refresh);
   return (
     <Layout title={'PokeDev'}>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-10">
         {pokemon.results.map((monster, index) => (
-          <Pokemon key={index} pokemon={monster} index={index + snap.offset} />
+          <Pokemon key={index} pokemon={monster} index={index + offset} />
         ))}
       </div>
 
       <div className="my-8 flex justify-center gap-5">
         <button
-          disabled={snap.page <= 1}
+          disabled={page == 1}
           className="disabled:bg-gray-500 px-3 py-1 bg-slate-900"
-          onClick={() => fetchPokemon(pokemon.previous, false)}
+          onClick={() => prevPokemon()}
         >
           prev
         </button>
+        you are in page {page}
         <button
-          disabled={!pokemon.next}
           className="disabled:bg-gray-500 px-3 py-1 bg-slate-900"
-          onClick={() => fetchPokemon(pokemon.next, true)}
+          onClick={() => nextPokemon()}
         >
           next
         </button>

@@ -22,7 +22,7 @@ const Pokemon = ({ pokemon }) => {
       <div key={index} className="bg-slate-700 my-2 rounded p-1">
         <div
           className="bg-slate-900 rounded px-2"
-          style={{ width: `${stat.base_stat}%` }}
+          style={{ width: `${stat.base_stat * 5}px` }}
         >
           {stat.stat.name}: {stat.base_stat}
         </div>
