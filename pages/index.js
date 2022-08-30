@@ -4,7 +4,7 @@ import Pokemon from '../components/Pokemon';
 import { useSessionStorage, useEventListener } from 'usehooks-ts';
 
 export default function Home({ initialPokemon }) {
-  const [pokemon, setPokemon] = useState(initialPokemon);
+  const [pokemon, setPokemon] = useSessionStorage('pokemon', initialPokemon);
   const [page, setPage] = useSessionStorage('page', 1);
   const [offset, setOffet] = useSessionStorage('offset', 0);
 
@@ -31,6 +31,7 @@ export default function Home({ initialPokemon }) {
   const refresh = (e) => {
     setPage(1);
     setOffet(0);
+    setPokemon(initialPokemon);
   };
   useEventListener('beforeunload', refresh);
   return (
