@@ -9,7 +9,7 @@ export default function Home({ initialPokemon }) {
   const [offset, setOffet] = useSessionStorage('offset', 0);
 
   const nextPokemon = async (url) => {
-    setPage((x) => x + 1);
+    setPage((page += 1));
     setOffet((offset += 20));
     const response = await fetch(
       `https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`
@@ -19,7 +19,7 @@ export default function Home({ initialPokemon }) {
     setPokemon(nextPokemon);
   };
   const prevPokemon = async (url) => {
-    setPage((x) => x - 1);
+    setPage((page -= 1));
     setOffet((offset -= 20));
     const response = await fetch(
       `https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`
