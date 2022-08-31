@@ -12,7 +12,25 @@ const Pokemon = ({ pokemon }) => {
     pokemon.types.map((type) => (
       <li
         key={type.slot}
-        className="px-2 py-1 bg-slate-700 rounded select-none"
+        className={`px-2 py-1 rounded select-none ${
+          type.type.name == 'grass' ? 'bg-green-700' : ''
+        } ${type.type.name == 'poison' ? 'bg-purple-700' : ''} ${
+          type.type.name == 'rock' ? 'bg-yellow-700' : ''
+        } ${type.type.name == 'psychic' ? 'bg-fuchsia-700' : ''} ${
+          type.type.name == 'normal' ? 'bg-slate-700' : ''
+        } ${type.type.name == 'flying' ? 'bg-sky-700' : ''} ${
+          type.type.name == 'fire' ? 'bg-orange-600' : ''
+        } ${type.type.name == 'bug' ? 'bg-lime-600' : ''} ${
+          type.type.name == 'water' ? 'bg-cyan-600' : ''
+        } ${type.type.name == 'electric' ? 'bg-yellow-500' : ''} ${
+          type.type.name == 'dark' ? 'bg-zinc-800' : ''
+        } ${type.type.name == 'fighting' ? 'bg-red-600' : ''} ${
+          type.type.name == 'dragon' ? 'bg-pink-600' : ''
+        } ${type.type.name == 'steel' ? 'bg-zinc-500' : ''} ${
+          type.type.name == 'ground' ? 'bg-yellow-800' : ''
+        } ${type.type.name == 'fairy' ? 'bg-red-400' : ''} ${
+          type.type.name == 'ice' ? 'bg-cyan-400' : ''
+        } ${type.type.name == 'ghost' ? 'bg-violet-400' : ''}`}
       >
         {type.type.name}
       </li>
