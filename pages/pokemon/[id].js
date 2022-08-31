@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '../../components/Layout';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const Pokemon = ({ pokemon }) => {
   const pokeIndex = ('000' + pokemon.id).slice(-3);
@@ -20,12 +21,13 @@ const Pokemon = ({ pokemon }) => {
   const renderStats = () =>
     pokemon.stats.map((stat, index) => (
       <div key={index} className="bg-slate-700 my-2 rounded p-1">
-        <div
+        <motion.div
           className="bg-slate-900 rounded px-2 whitespace-nowrap "
-          style={{ width: `${stat.base_stat * 5}px` }}
+          initial={{ width: 0 }}
+          animate={{ width: `${stat.base_stat * 5}px` }}
         >
           {stat.stat.name}: {stat.base_stat}
-        </div>
+        </motion.div>
       </div>
     ));
 
