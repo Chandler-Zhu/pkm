@@ -1,9 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
-
+import { useSession, signIn, signOut } from 'next-auth/react';
 const Layout = ({ children, title }) => {
+  const { data: session } = useSession();
   return (
     <div>
       <Head>
@@ -20,10 +20,20 @@ const Layout = ({ children, title }) => {
             </h1>
           </a>
         </Link>
-        <Link href="/login">
-          <a className="relative group col-start-3 w-max ">
+        {session ? (
+          <button
+            className="col-start-3 w-max bg-cyan-600 w-24 h-12 m-2 hover:bg-cyan-700"
+            onClick={() => signOut()}
+          >
+            Sign Out
+          </button>
+        ) : (
+          <div className="relative group col-start-3 w-max ">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-            <button className="relative px-7 py-4 bg-black rounded-lg leading-none flex items-center divide-x divide-gray-600">
+            <button
+              className="relative px-7 py-4 bg-black rounded-lg leading-none flex items-center divide-x divide-gray-600"
+              onClick={() => signIn()}
+            >
               <span className="flex items-center space-x-5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -43,25 +53,8 @@ const Layout = ({ children, title }) => {
                 <span className="pr-6 text-gray-100">Log in</span>
               </span>
             </button>
-          </a>
-          {/* <a className="text-xl text-center text-amber-400 block mr-2 col-start-3">
-            Log in
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6 inline-block"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-              />
-            </svg>
-          </a> */}
-        </Link>
+          </div>
+        )}
       </header>
 
       <main className=" mx-6">{children}</main>
