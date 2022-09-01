@@ -12,11 +12,55 @@ const Layout = ({ children, title }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="bg-slate-900 py-10 mb-10">
+      <header className="bg-slate-900 py-10 mb-10 grid grid-cols-[2fr_8fr_2fr] items-center">
         <Link href="/">
           <a>
-            <h1 className="text-6xl text-center text-amber-400">{title}</h1>
+            <h1 className="text-6xl text-center text-amber-400 col-start-1 ml-4">
+              {title}
+            </h1>
           </a>
+        </Link>
+        <Link href="/login">
+          <a className="relative group col-start-3 w-max ">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+            <button className="relative px-7 py-4 bg-black rounded-lg leading-none flex items-center divide-x divide-gray-600">
+              <span className="flex items-center space-x-5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                  />
+                </svg>
+
+                <span className="pr-6 text-gray-100">Log in</span>
+              </span>
+            </button>
+          </a>
+          {/* <a className="text-xl text-center text-amber-400 block mr-2 col-start-3">
+            Log in
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 inline-block"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+              />
+            </svg>
+          </a> */}
         </Link>
       </header>
 
