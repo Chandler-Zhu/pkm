@@ -2,11 +2,25 @@ import React from 'react';
 import Layout from '../../components/Layout';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-
+import dynamic from 'next/dynamic';
+import { useSession, signIn, signOut } from 'next-auth/react';
+// const SlTooltip = dynamic(
+//   () =>
+//     import('../node_modules/@shoelace-style/shoelace/dist/react').then(
+//       (mod) => mod.SlTooltip
+//     ),
+//   {
+//     ssr: false,
+//   }
+// );
 const Pokemon = ({ pokemon }) => {
+  const { data: session } = useSession();
   const pokeIndex = ('000' + pokemon.id).slice(-3);
   const pokeName = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
-  console.log(pokemon);
+  // console.log(pokemon);
+  if (session) {
+    console.log(session.user);
+  }
 
   const renderTypes = () =>
     pokemon.types.map((type) => (
@@ -49,6 +63,10 @@ const Pokemon = ({ pokemon }) => {
       </div>
     ));
 
+  const renderMoves = () => {
+    return <div>dark-pulse</div>;
+  };
+
   return (
     <Layout title={pokeName}>
       <div className="flex flex-col justify-center items-center">
@@ -67,6 +85,19 @@ const Pokemon = ({ pokemon }) => {
         <ul className="flex gap-5">{renderTypes()}</ul>
 
         <div>{renderStats()}</div>
+        {session ? (
+          <ul className="flex gap-5">{renderMoves()}</ul>
+        ) : (
+          <p>
+            <button
+              className="col-start-3 bg-cyan-600 w-24 h-12 m-2 hover:bg-cyan-700"
+              onClick={() => signIn()}
+            >
+              Log in
+            </button>{' '}
+            to see moves
+          </p>
+        )}
       </div>
     </Layout>
   );
