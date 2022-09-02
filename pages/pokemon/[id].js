@@ -4,15 +4,15 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useSession, signIn, signOut } from 'next-auth/react';
-// const SlTooltip = dynamic(
-//   () =>
-//     import('../node_modules/@shoelace-style/shoelace/dist/react').then(
-//       (mod) => mod.SlTooltip
-//     ),
-//   {
-//     ssr: false,
-//   }
-// );
+const SlTooltip = dynamic(
+  () =>
+    import('../../node_modules/@shoelace-style/shoelace/dist/react').then(
+      (mod) => mod.SlTooltip
+    ),
+  {
+    ssr: false,
+  }
+);
 const Pokemon = ({ pokemon }) => {
   const { data: session } = useSession();
   const pokeIndex = ('000' + pokemon.id).slice(-3);
@@ -24,30 +24,40 @@ const Pokemon = ({ pokemon }) => {
 
   const renderTypes = () =>
     pokemon.types.map((type) => (
-      <li
-        key={type.slot}
-        className={`px-2 py-1 rounded select-none ${
-          type.type.name == 'grass' ? 'bg-green-700' : ''
-        } ${type.type.name == 'poison' ? 'bg-purple-700' : ''} ${
-          type.type.name == 'rock' ? 'bg-yellow-700' : ''
-        } ${type.type.name == 'psychic' ? 'bg-fuchsia-700' : ''} ${
-          type.type.name == 'normal' ? 'bg-slate-700' : ''
-        } ${type.type.name == 'flying' ? 'bg-sky-700' : ''} ${
-          type.type.name == 'fire' ? 'bg-orange-600' : ''
-        } ${type.type.name == 'bug' ? 'bg-lime-600' : ''} ${
-          type.type.name == 'water' ? 'bg-cyan-600' : ''
-        } ${type.type.name == 'electric' ? 'bg-yellow-500' : ''} ${
-          type.type.name == 'dark' ? 'bg-zinc-800' : ''
-        } ${type.type.name == 'fighting' ? 'bg-red-600' : ''} ${
-          type.type.name == 'dragon' ? 'bg-pink-600' : ''
-        } ${type.type.name == 'steel' ? 'bg-zinc-500' : ''} ${
-          type.type.name == 'ground' ? 'bg-yellow-800' : ''
-        } ${type.type.name == 'fairy' ? 'bg-red-400' : ''} ${
-          type.type.name == 'ice' ? 'bg-cyan-400' : ''
-        } ${type.type.name == 'ghost' ? 'bg-violet-400' : ''}`}
-      >
-        {type.type.name}
-      </li>
+      <SlTooltip key={type.slot}>
+        <div slot="content" className="p-2">
+          <p>
+            Double damage from: <span className="font-bold">some types</span>
+          </p>
+          <p>
+            Double damage from:{' '}
+            <span className="font-bold">some other types</span>
+          </p>
+        </div>
+        <li
+          className={`px-2 py-1 rounded select-none ${
+            type.type.name == 'grass' ? 'bg-green-700' : ''
+          } ${type.type.name == 'poison' ? 'bg-purple-700' : ''} ${
+            type.type.name == 'rock' ? 'bg-yellow-700' : ''
+          } ${type.type.name == 'psychic' ? 'bg-fuchsia-700' : ''} ${
+            type.type.name == 'normal' ? 'bg-slate-700' : ''
+          } ${type.type.name == 'flying' ? 'bg-sky-700' : ''} ${
+            type.type.name == 'fire' ? 'bg-orange-600' : ''
+          } ${type.type.name == 'bug' ? 'bg-lime-600' : ''} ${
+            type.type.name == 'water' ? 'bg-cyan-600' : ''
+          } ${type.type.name == 'electric' ? 'bg-yellow-500' : ''} ${
+            type.type.name == 'dark' ? 'bg-zinc-800' : ''
+          } ${type.type.name == 'fighting' ? 'bg-red-600' : ''} ${
+            type.type.name == 'dragon' ? 'bg-pink-600' : ''
+          } ${type.type.name == 'steel' ? 'bg-zinc-500' : ''} ${
+            type.type.name == 'ground' ? 'bg-yellow-800' : ''
+          } ${type.type.name == 'fairy' ? 'bg-red-400' : ''} ${
+            type.type.name == 'ice' ? 'bg-cyan-400' : ''
+          } ${type.type.name == 'ghost' ? 'bg-violet-400' : ''}`}
+        >
+          {type.type.name}
+        </li>
+      </SlTooltip>
     ));
 
   const renderStats = () =>
