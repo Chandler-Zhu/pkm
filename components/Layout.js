@@ -1,8 +1,28 @@
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import { withRouter } from 'next/router';
 import { useSession, signIn, signOut } from 'next-auth/react';
-const Layout = ({ children, title }) => {
+const SlButton = dynamic(
+  () =>
+    import('../node_modules/@shoelace-style/shoelace/dist/react').then(
+      (mod) => mod.SlButton
+    ),
+  {
+    ssr: false,
+  }
+);
+// const SlIcon = dynamic(
+//   () =>
+//     import('../node_modules/@shoelace-style/shoelace/dist/react').then(
+//       (mod) => mod.SlIcon
+//     ),
+//   {
+//     ssr: false,
+//   }
+// );
+const Layout = ({ children, title, router }) => {
   const { data: session } = useSession();
   return (
     <div>
@@ -15,18 +35,40 @@ const Layout = ({ children, title }) => {
       <header className="bg-slate-900 py-10 mb-10 grid grid-cols-[2fr_8fr_2fr] items-center">
         <Link href="/">
           <a>
-            <h1 className="text-6xl text-center text-amber-400 col-start-1 ml-4">
-              {title}
+            <h1 className="text-6xl text-center text-amber-400 col-start-1 ml-4 whitespace-nowrap">
+              {router.pathname == '/account' ? 'PokeDev' : title}
             </h1>
           </a>
         </Link>
         {session ? (
-          <button
-            className="col-start-3 w-max bg-cyan-600 w-24 h-12 m-2 hover:bg-cyan-700"
-            onClick={() => signOut()}
-          >
-            Sign Out
-          </button>
+          <>
+            <Link href="/account">
+              <a className="ml-auto mr-2 text-xl underline decoration-amber-400 underline-offset-8 hover:decoration-4 transition-all duration-200">
+                My Account
+              </a>
+            </Link>
+            <SlButton
+              variant="default"
+              className="col-start-3 m-2 w-max"
+              onClick={() => signOut()}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 inline-block mb-1 mr-3 align-middle"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                />
+              </svg>
+              Sign Out
+            </SlButton>
+          </>
         ) : (
           <div className="relative group col-start-3 w-max ">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
@@ -62,4 +104,4 @@ const Layout = ({ children, title }) => {
   );
 };
 
-export default Layout;
+export default withRouter(Layout);
