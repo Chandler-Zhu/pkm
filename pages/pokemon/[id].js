@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '../../components/Layout';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -17,21 +17,252 @@ const Pokemon = ({ pokemon }) => {
   const { data: session } = useSession();
   const pokeIndex = ('000' + pokemon.id).slice(-3);
   const pokeName = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
-  // console.log(pokemon);
-  if (session) {
-    console.log(session.user);
-  }
 
   const renderTypes = () =>
     pokemon.types.map((type) => (
       <SlTooltip key={type.slot}>
         <div slot="content" className="p-2">
-          <p>
-            Double damage from: <span className="font-bold">some types</span>
+          <p className="text-base inline-flex">
+            <span className="shrink-0 mr-2">Double damage from: </span>
+            {type.type.name == 'normal' && (
+              <b className="text-red-600"> fighting</b>
+            )}
+            {type.type.name == 'flying' && (
+              <span>
+                <b className="text-yellow-700"> rock</b>
+                <b className="text-cyan-400"> ice</b>
+                <b className="text-yellow-500"> electric</b>
+              </span>
+            )}
+            {type.type.name == 'rock' && (
+              <span>
+                <b className="text-yellow-800"> ground</b>
+                <b className="text-red-600"> fighting</b>
+                <b className="text-zinc-500"> steel</b>
+                <b className="text-cyan-600"> water</b>
+                <b className="text-green-600"> grass</b>
+              </span>
+            )}
+            {type.type.name == 'ground' && (
+              <span>
+                <b className="text-cyan-600"> water</b>
+                <b className="text-cyan-400"> ice</b>
+                <b className="text-green-600"> grass</b>
+              </span>
+            )}
+            {type.type.name == 'steel' && (
+              <span>
+                <b className="text-yellow-800"> ground</b>
+                <b className="text-red-600"> fighting</b>
+                <b className="text-orange-600"> fire</b>
+              </span>
+            )}
+            {type.type.name == 'dark' && (
+              <span>
+                <b className="text-red-600"> fighting</b>
+                <b className="text-lime-600"> bug</b>
+                <b className="text-red-400"> fairy</b>
+              </span>
+            )}
+            {type.type.name == 'ghost' && (
+              <span>
+                <b className="text-violet-400"> ghost</b>
+                <b className="text-zinc-600"> dark</b>
+              </span>
+            )}
+            {type.type.name == 'fairy' && (
+              <span>
+                <b className="text-purple-700"> poison</b>
+                <b className="text-zinc-500"> steel</b>
+              </span>
+            )}{' '}
+            {type.type.name == 'dragon' && (
+              <span>
+                <b className="text-cyan-400"> ice</b>
+                <b className="text-red-400"> fairy</b>
+                <b className="text-pink-600"> dragon</b>
+              </span>
+            )}
+            {type.type.name == 'ice' && (
+              <span>
+                <b className="text-yellow-700"> rock</b>
+                <b className="text-red-600"> fighting</b>
+                <b className="text-zinc-500"> steel</b>
+                <b className="text-orange-600"> fire</b>
+              </span>
+            )}
+            {type.type.name == 'electric' && (
+              <b className="text-yellow-800"> ground</b>
+            )}
+            {type.type.name == 'fire' && (
+              <span>
+                <b className="text-cyan-600"> water</b>
+                <b className="text-yellow-800"> ground</b>
+                <b className="text-yellow-700"> rock</b>
+              </span>
+            )}
+            {type.type.name == 'grass' && (
+              <span>
+                <b className="text-cyan-600"> flying</b>
+                <b className="text-purple-700"> poison</b>
+                <b className="text-lime-600"> bug</b>
+                <b className="text-orange-600"> fire</b>
+                <b className="text-cyan-400"> ice</b>
+              </span>
+            )}
+            {type.type.name == 'psychic' && (
+              <span>
+                <b className="text-lime-600"> bug</b>
+                <b className="text-violet-400"> ghost</b>
+                <b className="text-zinc-600"> dark</b>
+              </span>
+            )}
+            {type.type.name == 'bug' && (
+              <span>
+                <b className="text-cyan-600"> flying</b>
+                <b className="text-orange-600"> fire</b>
+                <b className="text-yellow-700"> rock</b>
+              </span>
+            )}
+            {type.type.name == 'poison' && (
+              <span>
+                <b className="text-fuchsia-600"> psychic</b>
+                <b className="text-yellow-800"> ground</b>
+              </span>
+            )}
+            {type.type.name == 'fighting' && (
+              <span>
+                <b className="text-cyan-600"> flying</b>
+                <b className="text-fuchsia-600"> psychic</b>
+                <b className="text-red-400"> fairy</b>
+              </span>
+            )}
+            {type.type.name == 'water' && (
+              <span>
+                <b className="text-green-600"> grass</b>
+                <b className="text-yellow-500"> electric</b>
+              </span>
+            )}
           </p>
-          <p>
-            Double damage from:{' '}
-            <span className="font-bold">some other types</span>
+          <p className="text-base  inline-flex">
+            <span className="shrink-0 mr-2">Double damage to: </span>
+            {type.type.name == 'normal' && <b> none</b>}
+            {type.type.name == 'grass' && (
+              <span>
+                <b className="text-cyan-600"> water</b>
+                <b className="text-yellow-800"> ground</b>
+                <b className="text-yellow-700"> rock</b>
+              </span>
+            )}
+            {type.type.name == 'rock' && (
+              <span>
+                <b className="text-cyan-600"> flying</b>
+                <b className="text-lime-600"> bug</b>
+                <b className="text-orange-600"> fire</b>
+                <b className="text-cyan-400"> ice</b>
+              </span>
+            )}
+            {type.type.name == 'flying' && (
+              <span>
+                <b className="text-red-600"> fighting</b>
+                <b className="text-lime-600"> bug</b>
+                <b className="text-green-600"> grass</b>
+              </span>
+            )}
+            {type.type.name == 'steel' && (
+              <span>
+                <b className="text-cyan-400"> ice</b>
+                <b className="text-red-400"> fairy</b>
+                <b className="text-yellow-700"> rock</b>
+              </span>
+            )}
+            {type.type.name == 'dark' && (
+              <span>
+                <b className="text-violet-400"> ghost</b>
+                <b className="text-fuchsia-600"> psychic</b>
+              </span>
+            )}
+            {type.type.name == 'ground' && (
+              <span>
+                <b className="text-yellow-700"> rock</b>
+                <b className="text-purple-700"> poison</b>
+                <b className="text-zinc-500"> steel</b>
+                <b className="text-orange-600"> fire</b>
+                <b className="text-yellow-500"> electric</b>
+              </span>
+            )}
+            {type.type.name == 'ghost' && (
+              <span>
+                <b className="text-violet-400"> ghost</b>
+                <b className="text-fuchsia-600"> psychic</b>
+              </span>
+            )}
+            {type.type.name == 'dragon' && (
+              <b className="text-pink-600"> dragon</b>
+            )}
+            {type.type.name == 'ice' && (
+              <span>
+                <b className="text-green-600"> grass</b>
+                <b className="text-yellow-800"> ground</b>
+                <b className="text-sky-700"> flying</b>
+                <b className="text-pink-600"> dragon</b>
+              </span>
+            )}
+            {type.type.name == 'fire' && (
+              <span>
+                <b className="text-green-600"> grass</b>
+                <b className="text-zinc-500"> steel</b>
+                <b className="text-lime-600"> bug</b>
+                <b className="text-cyan-400"> ice</b>
+              </span>
+            )}
+            {type.type.name == 'fairy' && (
+              <span>
+                <b className="text-zinc-600"> dark</b>
+                <b className="text-red-600"> fighting</b>
+                <b className="text-pink-600"> dragon</b>
+              </span>
+            )}
+            {type.type.name == 'fighting' && (
+              <span>
+                <b className="text-slate-500"> normal</b>
+                <b className="text-yellow-700"> rock</b>
+                <b className="text-cyan-400"> ice</b>
+                <b className="text-zinc-600"> dark</b>
+              </span>
+            )}
+            {type.type.name == 'bug' && (
+              <span>
+                <b className="text-green-600"> grass</b>
+                <b className="text-zinc-600"> dark</b>
+                <b className="text-fuchsia-600"> psychic</b>
+              </span>
+            )}
+            {type.type.name == 'poison' && (
+              <span>
+                <b className="text-green-600"> grass</b>
+                <b className="text-red-400"> fairy</b>
+              </span>
+            )}
+            {type.type.name == 'water' && (
+              <span>
+                <b className="text-yellow-800"> ground</b>
+                <b className="text-yellow-700"> rock</b>
+                <b className="text-orange-600"> fire</b>
+              </span>
+            )}
+            {type.type.name == 'psychic' && (
+              <span>
+                <b className="text-red-600"> fighting</b>
+                <b className="text-purple-700"> poison</b>
+              </span>
+            )}
+            {type.type.name == 'electric' && (
+              <span>
+                <b className="text-cyan-600"> water</b>
+                <b className="text-sky-700"> flying</b>
+              </span>
+            )}
           </p>
         </div>
         <li
