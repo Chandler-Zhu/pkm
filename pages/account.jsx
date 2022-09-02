@@ -29,49 +29,49 @@ function Account({ router }) {
               <div className="marquee marquee--hover-pause">
                 <ul className="marquee__content">
                   <li>
-                    <Image layout="fill" src={Monf} alt="" />
+                    <Image layout="responsive" src={Monf} alt="" width={200} />
                   </li>
                   <li>
-                    <Image layout="fill" src={Mant} alt="" />
+                    <Image layout="responsive" src={Mant} alt="" width={200} />
                   </li>
                   <li>
-                    <Image layout="fill" src={Sniv} alt="" />
+                    <Image layout="responsive" src={Sniv} alt="" width={200} />
                   </li>
                   <li>
-                    <Image layout="fill" src={Lamp} alt="" />
+                    <Image layout="responsive" src={Lamp} alt="" width={200} />
                   </li>
                   <li>
-                    <Image layout="fill" src={Dura} alt="" />
+                    <Image layout="responsive" src={Dura} alt="" width={200} />
                   </li>
                   <li>
-                    <Image layout="fill" src={Panc} alt="" />
+                    <Image layout="responsive" src={Panc} alt="" width={200} />
                   </li>
                   <li>
-                    <Image layout="fill" src={Mel} alt="" />
+                    <Image layout="responsive" src={Mel} alt="" width={200} />
                   </li>
                 </ul>
 
                 <ul aria-hidden="true" className="marquee__content">
                   <li>
-                    <Image layout="fill" src={Monf} alt="" />
+                    <Image layout="responsive" src={Monf} alt="" width={200} />
                   </li>
                   <li>
-                    <Image layout="fill" src={Mant} alt="" />
+                    <Image layout="responsive" src={Mant} alt="" width={200} />
                   </li>
                   <li>
-                    <Image layout="fill" src={Sniv} alt="" />
+                    <Image layout="responsive" src={Sniv} alt="" width={200} />
                   </li>
                   <li>
-                    <Image layout="fill" src={Lamp} alt="" />
+                    <Image layout="responsive" src={Lamp} alt="" width={200} />
                   </li>
                   <li>
-                    <Image layout="fill" src={Dura} alt="" />
+                    <Image layout="responsive" src={Dura} alt="" width={200} />
                   </li>
                   <li>
-                    <Image layout="fill" src={Panc} alt="" />
+                    <Image layout="responsive" src={Panc} alt="" width={200} />
                   </li>
                   <li>
-                    <Image layout="fill" src={Mel} alt="" />
+                    <Image layout="responsive" src={Mel} alt="" width={200} />
                   </li>
                 </ul>
               </div>
